@@ -18,7 +18,7 @@ const Store = sequelize.define('Store', {
   
   async function sincronizar(){
     await Store.sync();
-    console.log("Sincronizado");
+    console.log("Modelo Store Sincronizado");
   }
   
 sincronizar();

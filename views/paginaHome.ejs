@@ -19,8 +19,8 @@
                 </div>
                     <div class="logo">
                         <p></p>
-                        <a href="./"><img src="" alt="">Games</a>
-                        <p></p>
+                        <a href="./"><img src="" alt="">Troca Game</a>
+                        <p>Rolo on-line de jogos.</p>
                     </div>
                     <div class="buscar">  
                         <form>
@@ -30,10 +30,6 @@
                                 </span></button>
                             </form> 
                         </div>
-                        <div class="cliente">
-                            <legend>R$ 0,00<span class="material-symbols-outlined">
-                                    shopping_cart</span></legend>
-                        </div>
                 </div>
             </div>
         </header>
@@ -42,11 +38,7 @@
             <div id="conteiner">
                
                     <ul>
-                        <li><a href="#">PLAYSTATION 4</a></li>
-                        <li><a href="#">PLAYSTATION 5</a></li>
-                        <li><a href="#">XBOX</a></li>
-                        <li><a href="#">CARTÕES PRÉ-PAGOS</a></li>
-                        <li><a href="#">SUPORTE</a></li>
+                        <li><a href="/anunciar">Anuncie aqui</a></li>
                     </ul>
                 </ul>
         
@@ -58,337 +50,52 @@
     <div class="main">
     
     <main>
-        
-        <div class="imgs">
-
-            <video src="assets/images/Post para Instagram Animado Black Friday para Games Colorido.mp4" autoplay loop></video>
-            <img src="assets/images/Neon Black Friday games desconto instagram post.png" alt="">
-            <!-- <img src="assets/images/arthur.png" alt="">
-            -->
-            
-        </div>
-        
 
         <div class="curso">
 
-            <h1>DESTAQUES EM PLAYSTATION 4 <span class="material-symbols-outlined">
+            <h1>ESTÃO BOTANDO PRA JOGO NA SUA REGIÃO <span class="material-symbols-outlined">
                 stadia_controller
                 </span></h1>
                 
                 <div class="sobre-curso">
                     
-                
-            
                     <div class="photo-grid">
-                        
-                        <div>
-
-                            <img src="assets/images/rdr2ps4.jpg" alt="Imagem 1">
-                            <p>Red Dead Redemtion 2 - PS4 </p>
-                            <h3>R$ 29,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            
-                            <button>COMPRAR</button>
-                            <span class="material-symbols-outlined">
-                                sell
-                                </span> <span>29%</span>
-                        </div>
-
-                        <div>
-                            
-                            <img src="assets/images/fifa23capa.webp" alt="Imagem 2">
-                            <p>FIFA 23 - PS4</p>
-                            <h3>R$ 59,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            <button>COMPRAR</button>
-                            <span class="material-symbols-outlined">
-                                sell
-                                </span> <span>59%</span>
-
-                        </div>
-                        <div>
-
-                            <img src="assets/images/re4ps4capa.webp" alt="Imagem 3">
-                            <p>Resident Evil 4 Remake - PS4</p>
-                            <h3>R$59,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            <button>COMPRAR</button>|
-                        </div>
-                        <div>
-
-                            <img src="assets/images/The-last-of-us-part-2-ps4-cover.jpg" alt="Imagem 3">
-                            <p>The Last Of Us: Part II- PS4</p>
-                            <h3>R$ 39,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            <button>COMPRAR</button> 
-                            <span class="material-symbols-outlined">
-                                sell
-                                </span><span>30%</span>
-                        </div>
-                        
-                      </div>
+                        <% nearbyGames.forEach(game => { %>
+                            <div>
+                                <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
+                                <p><%= game.title %></p>
+                                <h3>R$ <%= game.price.toFixed(2) %></h3>
+                                <p>Anunciado por:</p>
+                                <button>COMPRAR</button>
+                            </div>
+                        <% }) %>
+                    </div>
             <br>
             
             
             <br>
         </div>
 
-            <h1>DESTAQUES EM XBOX <span class="material-symbols-outlined">
+            <h1>UM POUCO MAIS DISTANTE<span class="material-symbols-outlined">
                 stadia_controller
                 </span></h1>
-               
+            
                 <div class="photo-grid">
-                        
-                    <div>
-
-
-                        
-                            <img src="assets/images/red-dead-redemption-xbox-cover.jpg" alt="Imagem 1">
-                            <p>Red Dead Redemtion 2 - Xbox </p>
-                            <h3>R$ 49,90</h3>
-                        <legend><span class="material-symbols-outlined">
-                            credit_card
-                            </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            
-                            <a href="/item">
-                            <button>COMPRAR</button> 
-                            </a>
-                        <span class="material-symbols-outlined">
-                            sell
-                        </span><span>57%</span>
-                
-                    </div>
-
-                    <div>
-                        
-                        <img src="assets/images/the-witcher-xbox-cover.jpg" alt="Imagem 2">
-                        <p>The Witcher 3: Wild Hunt - Xbox</p>
-                        <h3>R$ 29,90</h3>
-                        <legend><span class="material-symbols-outlined">
-                            credit_card
-                            </span>3x sem juros</legend>
-                        <legend>5% no pix!</legend>
-                        <button>COMPRAR</button>
-                    </div>
-                    <div>
-                        
-                        <img src="assets/images/resident-evil-4-xbox-cover.jpg" alt="Imagem 3">
-                        <p>Resident Evil 4 Remake - Xbox</p>
-                        <h3>R$ 89,90</h3>
-                        <legend><span class="material-symbols-outlined">
-                            credit_card
-                            </span>3x sem juros</legend>
-                        <legend>5% no pix!</legend>
-                        <button>COMPRAR</button>
-                         <span class="material-symbols-outlined">
-                            sell
-                            </span> <span>70%</span>
-                    </div>
-                    <div>
-
-                        <img src="assets/images/hogwarts-legacy-xbox-one-cover.jpg" alt="Imagem 3">
-                        <p> Hogwarts Legacy - Xbox One</p>
-                        <h3>R$ 59,90</h3>
-                        <legend><span class="material-symbols-outlined">
-                            credit_card
-                            </span>3x sem juros</legend>
-                        <legend>5% no pix!</legend>
-                        <button>COMPRAR</button> 
-                        <span class="material-symbols-outlined">
-                            sell
-                            </span> <span>40%</span>
-                    </div>
-                    
-                </div>
-
-                <h1>DESTAQUES EM PLAYSTATION 5 <span class="material-symbols-outlined">
-                    stadia_controller
-                    </span></h1>
-                   
-                    <div class="photo-grid">
-                            
+                    <% farAwayGames.forEach(game => { %>
                         <div>
-    
-    
-                            
-                                <img src="assets/images/fifa-23-ps5-cover.jpg" alt="Imagem 1">
-                                <p>FIFA 23 - PS5</p>
-                                <h3>R$ 99,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                                <legend>5% no pix!</legend>
-                                
-                                <a href="#">
-                                <button>COMPRAR</button> 
-                                </a>
-                            <span class="material-symbols-outlined">
-                                sell
-                            </span><span>47%</span>
-                    
-                        </div>
-    
-                        <div>
-                            
-                            <img src="assets/images/Martha-is-dead-ps5-cover.jpg" alt="Imagem 2">
-                            <p>Martha is Dead - PS5</p>
-                            <h3>R$ 79,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
+                            <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
+                            <p><%= game.title %></p>
+                            <h3>R$ <%= game.price.toFixed(2) %></h3>
+                            <p>Anunciado por:</p>
                             <button>COMPRAR</button>
                         </div>
-                        <div>
-                            
-                            <img src="assets/images/GTA-Grand-Theft-Auto-V-cover-ps5.jpg" alt="Imagem 3">
-                            <p>Grand Theft Auto V - PS5</p>
-                            <h3>R$ 109,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            <button>COMPRAR</button>
-                             <span class="material-symbols-outlined">
-                                sell
-                                </span> <span>70%</span>
-                        </div>
-                        <div>
-    
-                            <img src="assets/images/god-of-war-ragnarok-ps5-cover.jpg" alt="Imagem 3">
-                            <p> God Of War: Ragnarok - PS5</p>
-                            <h3>R$ 59,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            <button>COMPRAR</button> 
-                            <span class="material-symbols-outlined">
-                                sell
-                                </span> <span>40%</span>
-                        </div>
-                        
-                    </div>
-                
-                
-                <div id="banner">
-                
-                        <img src="assets/images/banner.png" alt="">
-                </div>
-                
+                    <% }) %>
+                </div>  
                 <br>
                 <br>
                 <br>
                 <br>
-
-                <h1>QUERIDINHOS <span class="material-symbols-outlined">
-                    stadia_controller
-                    </span></h1>
-                   
-                    <div class="photo-grid">
-                            
-                        <div>
-    
-    
-                                
-                                <img src="assets/images/fifa-23-ps5-cover.jpg" alt="Imagem 1">
-                                <p>FIFA 23 - PS5</p>
-                                <h3>R$ 99,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                                <legend>5% no pix!</legend>
-                                
-                                <a href="#">
-                                <button>COMPRAR</button> 
-                                </a>
-                            <span class="material-symbols-outlined">
-                                sell
-                            </span><span>47%</span>
-                    
-                        </div>
-    
-                        <div>
-
-
-                        
-                            <img src="assets/images/red-dead-redemption-xbox-cover.jpg" alt="Imagem 1">
-                            <p>Red Dead Redemtion 2 - Xbox </p>
-                            <h3>R$ 49,90</h3>
-                        <legend><span class="material-symbols-outlined">
-                            credit_card
-                            </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            
-                            <a href="/item">
-                            <button>COMPRAR</button> 
-                            </a>
-                        <span class="material-symbols-outlined">
-                            sell
-                        </span><span>57%</span>
-                
-                    </div>
-                        <div>
-                            
-                            <img src="assets/images/GTA-Grand-Theft-Auto-V-cover-ps5.jpg" alt="Imagem 3">
-                            <p>Grand Theft Auto V - PS5</p>
-                            <h3>R$ 109,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            <button>COMPRAR</button>
-                             <span class="material-symbols-outlined">
-                                sell
-                                </span> <span>70%</span>
-                        </div>
-                       
-                        <div>
-
-                            <img src="assets/images/The-last-of-us-part-2-ps4-cover.jpg" alt="Imagem 3">
-                
-                            <p>The Last Of Us: Part II- PS4</p>
-                            <h3>R$ 39,90</h3>
-                            <legend><span class="material-symbols-outlined">
-                                credit_card
-                                </span>3x sem juros</legend>
-                            <legend>5% no pix!</legend>
-                            <button>COMPRAR</button> 
-                            <span class="material-symbols-outlined">
-                                sell
-                                </span><span>30%</span>
-                        </div>
-                        
-                    </div>
-
-                    
-                    <h1>Nossas lojas</h1>
-                    <div id="map" style="height: 400px; width: 100%;"></div>
-                    <div class="reference-grid">
-                            <% locations.forEach(location => { %>
-                                <div>
-                                    <h3>
-                                        <%= location.name %>
-                                    </h3> 
-                                    <p>
-                                        <%= location.description %> </li>
-                                    </p>
-                                </div>
-                                    <% }) %>
-                    </div>
+             
                     <h1>REFERÊNCIAS</h1>
                         <div class="reference-grid">
                             <div>                            
@@ -483,9 +190,6 @@
     </div>
 </div>
 </footer>
-<script>
-    var locations = <%- JSON.stringify(locations) %>;
-</script>
 <script src="js/map.js"></script>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </html

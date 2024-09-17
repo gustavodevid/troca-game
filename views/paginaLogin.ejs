@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Login</title>
+</head>
+<body>
+    <header>
+        <h1>Login</h1>
+    </header>
+    <main>
+        <h1>Entre</h1>
+        <form action="/logar" method="POST" id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password"  name="senha" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const form = event.target;
+                        const latInput = document.createElement('input');
+                        const lonInput = document.createElement('input');
+                        latInput.type = 'hidden';
+                        latInput.name = 'latitude';
+                        latInput.value = position.coords.latitude;
+                        lonInput.type = 'hidden';
+                        lonInput.name = 'longitude';
+                        lonInput.value = position.coords.longitude;
+                        form.appendChild(latInput);
+                        form.appendChild(lonInput);
+                        form.submit();
+                    }, function(error) {
+                        console.error('Erro ao obter localização:', error);
+                    });
+                } else {
+                    alert('Geolocalização não suportada pelo navegador.');
+                }
+            });
+        </script>
+    </main>
+</body>
+</html>

@@ -35,7 +35,7 @@ const Retirada = sequelize.define('Retirada', {
 
 async function sincronizar(){
   await Retirada.sync();
-  console.log("Sincronizado");
+  console.log("Modelo Retirada Sincronizado");
 }
 
 sincronizar();

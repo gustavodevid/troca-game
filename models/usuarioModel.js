@@ -1,14 +1,11 @@
-import { define } from '../db/sequelize';
+import sequelize from '../db/sequelize.js';
 import { DataTypes } from 'sequelize';
 
-const Usuario = define('Usuario', {
-    nome: {
+const Usuario = sequelize.define('Usuario', {
+    username: {
       type: DataTypes.STRING,
+      primaryKey: true,
       allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-      primaryKey: true
     },
     senha: {
       type: DataTypes.STRING
@@ -17,7 +14,7 @@ const Usuario = define('Usuario', {
   
   async function sincronizar(){
     await Usuario.sync();
-    console.log("Sincronizado");
+    console.log("Modelo Usuario Sincronizado");
   }
   
 sincronizar();

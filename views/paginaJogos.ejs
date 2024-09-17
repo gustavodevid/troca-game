@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>Games</title>
+</head>
+
+<body>
+<header id="header">
+    <div class="header">
+        <div class="content">
+            <div class="principal"></div>
+            <div class="logo">
+                <a href="./"><img src="" alt="">Troca Game</a>
+                <p>Rolo on-line de jogos.</p>
+            </div>
+            <div class="buscar">  
+                <form>
+                    <input type="text" placeholder="O que você procura?">
+                    <button type="submit"><span class="material-symbols-outlined">search</span></button>
+                </form> 
+            </div>
+        </div>
+    </div>
+</header>
+
+<nav class="sobre">
+    <div id="conteiner">
+        <ul>
+            <li><a href="/anunciar">Anuncie aqui</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="main">
+    <main>
+        <h1>Jogos Disponíveis <span class="material-symbols-outlined">stadia_controller</span></h1>
+        <div class="photo-grid">
+            <% games.forEach(game => { %>
+                <div>
+                    <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
+                    <p><%= game.title %></p>
+                    <h3>R$ <%= game.price.toFixed(2) %></h3>
+                    <p>Anunciado por:</p>
+                    <button>COMPRAR</button>
+                </div>
+            <% }) %>
+        </div>
+    </main>
+</div>   
+
+<script src="js/map.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+</html>

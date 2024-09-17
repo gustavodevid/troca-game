@@ -9,7 +9,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
   port: process.env.DB_PORT
 });
 
-async function  conectar() {
+async function conectar() {
   try {
       await sequelize.authenticate();
       console.log('Connection has been established successfully.');
