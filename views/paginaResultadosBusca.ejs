@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>Games</title>
+</head>
+
+<header>
+    <header id="header">
+    <div class="header">
+            <div class="content">
+                
+                <div class="principal">
+                </div>
+                    <div class="logo">
+                        <p></p>
+                        <a href="./"><img src="" alt="">Troca Game</a>
+                        <p>Rolo on-line de jogos.</p>
+                    </div>
+                    <div class="buscar">  
+                        <form action="/search" method="GET">
+                            <input type="text" name="query" placeholder="O que você procura?" required>
+                            <button type="submit"><span class="material-symbols-outlined">
+                                search
+                                </span></button>
+                            </form> 
+                        </div>
+                </div>
+            </div>
+        </header>
+        
+<body>
+    <header>
+        <h1>Resultados da Busca</h1>
+    </header>
+    <main>
+        <% if (games.length > 0) { %>
+            <div class="photo-grid">
+                <% games.forEach(game => { %>
+                    <div>
+                        <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
+                        <h3><%= game.title %></h3>
+                        <p>Preço: R$ <%= game.price.toFixed(2) %></p>
+                        <p>Plataforma: <%= game.platform %></p>
+                        <p>Anunciado por: <%= game.usuarioUsername %></p>
+                    </div>
+                            <% }) %>
+                    <% } else { %>
+                        <h2>Nenhum jogo encontrado para sua busca.</h2>
+                    </div>
+                    <% } %>
+    </main>
+    <footer>
+        <p>&copy; 2024 Troca Game. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

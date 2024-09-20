@@ -5,12 +5,30 @@ import path from 'path';
 import mapRoutes from './routes/mapRoutes.js';
 import session from 'express-session';
 import RedisStore from 'connect-redis';
+import redis from 'redis';
+import connectMongo from './db/mongo.js';
 
 const app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Configuração do Redis
+const redisClient = redis.createClient({
+    host: 'localhost',
+    port: 6379,
+  });
+  
+redisClient.on('error', (err) => {
+  console.error('Erro no Redis:', err);
+});
+
+redisClient.on('connect', () => {
+  console.log('Conectado ao Redis');
+});
+
+redisClient.connect();
+connectMongo();
 // Middleware para sessões
 app.use(session({
     store: new RedisStore({ client: redisClient }),

@@ -1,43 +1,44 @@
-import { DataTypes } from 'sequelize';
-import sequelize from '../db/sequelize.js';
+import mongoose from 'mongoose';
 
-const Retirada = sequelize.define('Retirada', {
+const retiradaSchema = new mongoose.Schema({
   id: {
-    type: DataTypes.UUID,
-    primaryKey: true,
-    defaultValue: DataTypes.UUIDV4
+    type: String,
+    default: () => new mongoose.Types.ObjectId(), 
   },
   nomeCliente: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true,
   },
   cpfCliente: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true,
   },
   email: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true,
   },
   localizacaoLoja: {
-    type: DataTypes.GEOMETRY('POINT'),
-    allowNull: false
+    type: {
+      type: String, 
+      enum: ['Point'],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
   },
   item: {
-    type: DataTypes.STRING,
-    allowNull: false
+    type: String,
+    required: true,
   },
   concluida: {
-    type: DataTypes.BOOLEAN,
-    allowNull: true
-  }
-})
+    type: Boolean,
+    default: false, 
+  },
+});
 
-async function sincronizar(){
-  await Retirada.sync();
-  console.log("Modelo Retirada Sincronizado");
-}
+retiradaSchema.index({ localizacaoLoja: '2dsphere' });
 
-sincronizar();
-
+const Retirada = mongoose.model('Retirada', retiradaSchema);
 export default Retirada;

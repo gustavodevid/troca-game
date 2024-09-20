@@ -14,8 +14,11 @@
     <header id="header">
     <div class="header">
             <div class="content">
-                
-                <div class="principal">
+                <div class="principal" style="text-align: end;">
+                    <p>Seja bem vindo, <%= username %>!</p>
+                <form action="/logout" method="POST" style="display:inline;">
+                    <button type="submit">Logout</button>
+                </form>
                 </div>
                     <div class="logo">
                         <p></p>
@@ -23,16 +26,17 @@
                         <p>Rolo on-line de jogos.</p>
                     </div>
                     <div class="buscar">  
-                        <form>
-                            <input type="text" placeholder="O que você procura?">
+                        <form action="/search" method="GET">
+                            <input type="text" name="query" placeholder="O que você procura?" required>
                             <button type="submit"><span class="material-symbols-outlined">
                                 search
                                 </span></button>
                             </form> 
-                        </div>
+                    </div>
                 </div>
-            </div>
-        </header>
+        </div>
+                
+            </header>
         
         <nav class="sobre">
             <div id="conteiner">
@@ -40,6 +44,7 @@
                     <ul>
                         <li><a href="/anunciar?username=<%= username %>">Anuncie aqui</a></li>
                         <li><a href="/meus-anuncios?username=<%= username %>">Meus Anuncios</a></li>
+                        
                     </ul>
                 </ul>
         
@@ -67,7 +72,6 @@
                                 <p><%= game.title %></p>
                                 <h3>R$ <%= game.price.toFixed(2) %></h3>
                                 <p>Anunciado por: <%= game.usuarioUsername %></p>
-                                <button>COMPRAR</button>
                             </div>
                         <% }) %>
                     </div>
@@ -88,7 +92,6 @@
                             <p><%= game.title %></p>
                             <h3>R$ <%= game.price.toFixed(2) %></h3>
                             <p>Anunciado por: <%= game.usuarioUsername %></p>
-                            <button>COMPRAR</button>
                         </div>
                     <% }) %>
                 </div>  
@@ -96,7 +99,8 @@
                 <br>
                 <br>
                 <br>
-             
+
+
                     <h1>REFERÊNCIAS</h1>
                         <div class="reference-grid">
                             <div>                            

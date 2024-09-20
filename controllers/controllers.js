@@ -1,13 +1,12 @@
-import Store from "../models/locationModel.js";
+import Store from "../models/storeModel.js";
 import Retirada from "../models/retiradaModel.js";
 import Game from "../models/gameModel.js";
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
-import { Op, fn, col } from 'sequelize';
+import { Op, fn, col, Sequelize } from 'sequelize';
 import { getDistance } from 'geolib';
 import Usuario from "../models/usuarioModel.js";
-import { log } from "console";
 
 export async function criarUsuario(req, res) {
   const { username, senha } = req.body;
@@ -109,10 +108,10 @@ export function renderizarPaginaItem(req, res) {
   res.render('paginaItem', {title: 'Compra'});
 }
 
-export async function getAllStores(req, res) {
-  const locations = await Store.findAll();
-  res.json(locations);
-}
+// export async function getAllStores(req, res) {
+//   const locations = await Store.findAll();
+//   res.json(locations);
+// }
 
 export async function renderizarPaginaAgendar(req, res) {
   res.render('paginaAgendarRetirada');
@@ -126,13 +125,15 @@ export async function agendarRetirada(req, res) {
       
     const localizacaoLoja = loja.location;
 
-    const retirada = await Retirada.create({
+    const retirada = new Retirada ({
       nomeCliente,
       cpfCliente,
       email,
       localizacaoLoja,
       item,
     });
+
+    await retirada.save();
 
     res.render('paginaRetiradaAgendada', { retirada, store } );
   } catch (error) {
@@ -147,10 +148,10 @@ export async function renderizarPaginaMeusAnuncios(req, res) {
   res.render('paginaMeusAnuncios', { games })
 }
 
-export async function fetchRetiradas(req, res) {
-  const pedidos = await Retirada.findAll();
-  res.json(pedidos);
-}
+// export async function fetchRetiradas(req, res) {
+//   const pedidos = await Retirada.findAll();
+//   res.json(pedidos);
+// }
 
 export async function excluirRetirada(req, res) {
   const { id } = req.params;
@@ -215,13 +216,10 @@ export async function anunciarJogo(req, res) {
               return res.status(500).send("Erro ao fazer upload da imagem.");
           }
 
-          const { title, description, price, platform, latitude, longitude, username } = req.body;
-
-          const user = await Usuario.findOne({ username });
-        if (!user) {
-          console.error('Usuário não encontrado:', username);
-          return res.status(404).send("Usuário não encontrado.");
-        }
+          const { title, description, price, platform} = req.body;
+          const username= req.session.username; 
+          const latitude = req.session.latitude;
+          const longitude = req.session.longitude;
           
           const novoJogo = await Game.create({
               title,
@@ -233,11 +231,11 @@ export async function anunciarJogo(req, res) {
                   type: 'Point',
                   coordinates: [parseFloat(longitude), parseFloat(latitude)]
               },
-              usuarioUsername: user.username
+              usuarioUsername: username
           });
 
           console.log("Jogo anunciado com sucesso:", novoJogo);
-          res.redirect(`/home?latitude=${latitude}&longitude=${longitude}&username=${user.username}`);  
+          res.redirect(`/home`);  
       });
 
   } catch (error) {
@@ -280,4 +278,37 @@ export async function editarJogo(req, res) {
   } catch (error) {
       return res.status(500).json({ message: 'Erro ao editar o jogo.', error });
   }
+}
+
+export async function searchGames(req, res) {
+  const searchTerm = req.query.query; 
+
+  if (!searchTerm) {
+      return res.status(400).send('Termo de busca não fornecido');
+  }
+
+  try {
+      const games = await Game.findAll({
+          where: {
+            [Op.or]: [
+                { title: { [Op.iLike]: `%${searchTerm}%` } }
+            ]
+        }
+      });
+
+      res.render('paginaResultadosBusca', { games });
+  } catch (error) {
+      console.error('Erro ao buscar jogos:', error);
+      res.status(500).send('Erro interno ao buscar jogos');
+  }
+}
+
+export async function deslogar(req, res) {
+  req.session.destroy((err) => {
+    if (err) {
+        console.error('Erro ao encerrar a sessão:', err);
+        return res.status(500).send('Erro ao encerrar a sessão');
+    }
+    res.redirect('/'); 
+});
 }
