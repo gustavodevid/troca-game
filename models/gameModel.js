@@ -1,7 +1,13 @@
 import sequelize from '../db/sequelize.js';
 import { DataTypes } from 'sequelize';
+import Usuario from './usuarioModel.js';
 
 const Game = sequelize.define('Game', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -25,8 +31,18 @@ const Game = sequelize.define('Game', {
         type: DataTypes.GEOMETRY('POINT'),
         allowNull: false    
     },
+    usuarioUsername: {
+        type: DataTypes.STRING,
+        references: {
+            model: Usuario,
+            key: 'username'
+        },
+        allowNull: false
+    }
 });
 
+Game.belongsTo(Usuario, { foreignKey: 'usuarioUsername' }); 
+Usuario.hasMany(Game, { foreignKey: 'usuarioUsername' });
 
 async function sincronizar(){
     await Game.sync();

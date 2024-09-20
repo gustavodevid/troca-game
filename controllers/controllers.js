@@ -7,6 +7,7 @@ import fs from 'fs';
 import { Op, fn, col } from 'sequelize';
 import { getDistance } from 'geolib';
 import Usuario from "../models/usuarioModel.js";
+import { log } from "console";
 
 export async function criarUsuario(req, res) {
   const { username, senha } = req.body;
@@ -15,8 +16,7 @@ export async function criarUsuario(req, res) {
           username,
           senha
       });
-
-      res.status(201).json({ message: 'Usuário criado com sucesso!', usuario });
+      res.redirect("/");
   } catch (error) {
       console.error('Erro ao criar usuário:', error);
       res.status(500).json({ message: 'Erro ao criar usuário' });
@@ -39,7 +39,10 @@ export async function logar (req, res) {
       const user = await Usuario.findOne({ where: { username, senha } });
 
       if (user) {
-          res.redirect(`/home?latitude=${latitude}&longitude=${longitude}`);
+          req.session.username = username;
+          req.session.latitude = latitude;
+          req.session.longitude = longitude;
+          res.redirect(`/home`);
       } else {
           res.status(401).send('Credenciais inválidas');
       }
@@ -58,8 +61,8 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 export async function renderizarPaginaHome(req, res) {
-  const userLatitude = parseFloat(req.query.latitude); 
-  const userLongitude = parseFloat(req.query.longitude); 
+  const userLatitude = parseFloat(req.session.latitude); 
+  const userLongitude = parseFloat(req.session.longitude); 
   const proximityRadius = 50000;
   try {
    
@@ -85,8 +88,7 @@ export async function renderizarPaginaHome(req, res) {
         return distance > proximityRadius;
     });
 
-   
-    res.render('paginaHome', { nearbyGames, farAwayGames });
+    res.render('paginaHome', { nearbyGames, farAwayGames, username: req.session.username });
 } catch (error) {
     console.error('Erro ao buscar jogos:', error);
     res.status(500).send('Erro interno do servidor');
@@ -139,8 +141,10 @@ export async function agendarRetirada(req, res) {
   }
 }
 
-export async function renderizarPaginaRetiradas(req, res) {
-  res.render('paginaMinhasRetiradas')
+export async function renderizarPaginaMeusAnuncios(req, res) {
+  const usuarioUsername = req.query.username;
+  const games = await Game.findAll({ where: { usuarioUsername } });
+  res.render('paginaMeusAnuncios', { games })
 }
 
 export async function fetchRetiradas(req, res) {
@@ -191,8 +195,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 export async function renderizarPaginaAnunciar(req, res) {
+  const username = req.query.username;
   try {
-      res.render('paginaAnunciar'); 
+      res.render('paginaAnunciar', { username}); 
   } catch (error) {
       console.error("Erro ao renderizar a página de anúncio:", error);
       res.status(500).send("Erro ao renderizar a página de anúncio.");
@@ -210,8 +215,13 @@ export async function anunciarJogo(req, res) {
               return res.status(500).send("Erro ao fazer upload da imagem.");
           }
 
-          const { title, description, price, platform, latitude, longitude } = req.body;
+          const { title, description, price, platform, latitude, longitude, username } = req.body;
 
+          const user = await Usuario.findOne({ username });
+        if (!user) {
+          console.error('Usuário não encontrado:', username);
+          return res.status(404).send("Usuário não encontrado.");
+        }
           
           const novoJogo = await Game.create({
               title,
@@ -222,15 +232,52 @@ export async function anunciarJogo(req, res) {
               location: {
                   type: 'Point',
                   coordinates: [parseFloat(longitude), parseFloat(latitude)]
-              }
+              },
+              usuarioUsername: user.username
           });
 
           console.log("Jogo anunciado com sucesso:", novoJogo);
-          res.redirect('/');  
+          res.redirect(`/home?latitude=${latitude}&longitude=${longitude}&username=${user.username}`);  
       });
 
   } catch (error) {
       console.error("Erro ao anunciar o jogo:", error);
       res.status(500).send("Erro ao anunciar o jogo.");
+  }
+}
+
+export async function deletarJogo(req, res) {
+  const { id } = req.params;
+
+  try {
+      const game = await Game.findByPk(id);
+      if (!game) {
+          return res.status(404).json({ message: 'Jogo não encontrado.' });
+      }
+
+      await game.destroy();
+      return res.status(200).json({ message: 'Jogo deletado com sucesso!' });
+  } catch (error) {
+      return res.status(500).json({ message: 'Erro ao deletar o jogo.', error });
+  }
+}
+
+export async function editarJogo(req, res) {
+  const { id } = req.params;
+  const { title, price } = req.body;
+
+  try {
+      const game = await Game.findByPk(id);
+      if (!game) {
+          return res.status(404).json({ message: 'Jogo não encontrado.' });
+      }
+
+      game.title = title;
+      game.price = price;
+      await game.save();
+
+      return res.status(200).json({ message: 'Jogo editado com sucesso!', game });
+  } catch (error) {
+      return res.status(500).json({ message: 'Erro ao editar o jogo.', error });
   }
 }

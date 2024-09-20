@@ -1,10 +1,11 @@
 // routes/mapRoutes.js
 import { Router } from 'express';
 const router = Router();
-import { renderizarPaginaHome, getAllStores, agendarRetirada, renderizarPaginaAgendar, renderizarPaginaItem, renderizarPaginaRetiradas, fetchRetiradas, excluirRetirada, marcarComoConcluida, renderizarPaginaJogos, renderizarPaginaLogin, logar, criarUsuario, renderizarPaginaCadastrar } from '../controllers/controllers.js';
+import { renderizarPaginaHome, getAllStores, agendarRetirada, renderizarPaginaAgendar, renderizarPaginaItem, fetchRetiradas, excluirRetirada, marcarComoConcluida, renderizarPaginaJogos, renderizarPaginaLogin, logar, criarUsuario, renderizarPaginaCadastrar, renderizarPaginaMeusAnuncios, deletarJogo, editarJogo } from '../controllers/controllers.js';
 import { anunciarJogo, renderizarPaginaAnunciar } from '../controllers/controllers.js';
+import { verificarAutenticacao } from '../middlewares/verificarAutenticacao.js';
 
-router.get('/home', renderizarPaginaHome);
+router.get('/home', verificarAutenticacao, renderizarPaginaHome);
 
 router.get('/item', renderizarPaginaItem);
 
@@ -16,7 +17,11 @@ router.post('/agendar', agendarRetirada);
 
 router.get('/lojas', getAllStores);
 
-router.get('/pagina-retiradas', renderizarPaginaRetiradas);
+router.get('/meus-anuncios', renderizarPaginaMeusAnuncios);
+
+router.delete('/meus-anuncios/delete/:id', deletarJogo);
+
+router.put('/meus-anuncios/edit/:id', editarJogo);
 
 router.get('/retiradas', fetchRetiradas);
 

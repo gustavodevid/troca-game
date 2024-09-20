@@ -38,7 +38,8 @@
             <div id="conteiner">
                
                     <ul>
-                        <li><a href="/anunciar">Anuncie aqui</a></li>
+                        <li><a href="/anunciar?username=<%= username %>">Anuncie aqui</a></li>
+                        <li><a href="/meus-anuncios?username=<%= username %>">Meus Anuncios</a></li>
                     </ul>
                 </ul>
         
@@ -65,7 +66,7 @@
                                 <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
                                 <p><%= game.title %></p>
                                 <h3>R$ <%= game.price.toFixed(2) %></h3>
-                                <p>Anunciado por:</p>
+                                <p>Anunciado por: <%= game.usuarioUsername %></p>
                                 <button>COMPRAR</button>
                             </div>
                         <% }) %>
@@ -86,7 +87,7 @@
                             <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
                             <p><%= game.title %></p>
                             <h3>R$ <%= game.price.toFixed(2) %></h3>
-                            <p>Anunciado por:</p>
+                            <p>Anunciado por: <%= game.usuarioUsername %></p>
                             <button>COMPRAR</button>
                         </div>
                     <% }) %>
