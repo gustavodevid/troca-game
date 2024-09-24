@@ -9,6 +9,10 @@ const retiradaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+  },
   cpfCliente: {
     type: String,
     required: true,

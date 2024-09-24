@@ -125,10 +125,12 @@ export async function agendarRetirada(req, res) {
     const loja = await Store.findOne( { name: store } );
       
     const localizacaoLoja = loja.location;
-
+    
+    const username = req.session.username;
     const retirada = new Retirada ({
       nomeCliente,
       cpfCliente,
+      username,
       email,
       localizacaoLoja,
       item,
@@ -155,8 +157,17 @@ export async function renderizarPaginaRetiradas(req, res) {
 }
 
 export async function fetchRetiradas(req, res) {
-  const pedidos = await Retirada.find();
-  res.json(pedidos);
+  try {
+    const username = req.session.username;
+    if (!username) {
+      return res.status(401).json({ message: 'Usuário não autenticado.' });
+    }
+    const retiradas = await Retirada.find({ username});
+    res.json(retiradas);
+  } catch (error) {
+    console.error('Erro ao buscar retiradas:', error);
+    res.status(500).json({ message: 'Erro ao buscar retiradas.', error });
+  }
 }
 
 export async function excluirRetirada(req, res) {
@@ -179,7 +190,7 @@ export async function marcarComoConcluida(req, res) {
   try {
     const { id } = req.params;
     
-    const retirada = await Retirada.findByPk(id);
+    const retirada = await Retirada.findById(id);
 
     if (retirada) {
       retirada.concluida = true;

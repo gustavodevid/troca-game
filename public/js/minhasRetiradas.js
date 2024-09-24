@@ -53,7 +53,8 @@ row.appendChild(mapCell);
             itemCell.textContent = retirada.item;
             row.appendChild(itemCell);
 
-            const editCell = document.createElement('td');
+            const actionsCell = document.createElement('td');
+
             const editButton = document.createElement('button');
             editButton.textContent = 'Ok';
             editButton.classList.add('edit-btn');
@@ -75,7 +76,6 @@ row.appendChild(mapCell);
                     alert('Erro ao marcar retirada como concluída.');
                 }
             });
-            const deleteCell = document.createElement('td');
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Excluir';
             deleteButton.classList.add('delete-btn');
@@ -97,9 +97,15 @@ row.appendChild(mapCell);
                     alert('Erro ao excluir a retirada.');
                 }
             });
-            deleteCell.appendChild(deleteButton);
-            row.appendChild(deleteCell);
+            actionsCell.appendChild(editButton);
+            actionsCell.appendChild(deleteButton);
 
+            row.appendChild(actionsCell);
+
+            if (retirada.concluida) {
+                row.style.backgroundColor = 'lightgreen'; 
+            }
+            
             tableBody.appendChild(row);
         });
     } catch (error) {
@@ -108,23 +114,27 @@ row.appendChild(mapCell);
 }
 
 document.addEventListener('DOMContentLoaded', fetchretiradas);
-
+let currentMap = null;
 function showMapPopup(lat, lng) {
     const popup = document.getElementById('map-popup');
     popup.style.display = 'block';
 
-    const map = L.map('map').setView([lat, lng], 15);
+    if (currentMap) {
+        currentMap.remove(); 
+    }
+
+   currentMap = L.map('map').setView([lat, lng], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map)
-    L.marker([lat, lng]).addTo(map).bindPopup(`<b>Sua Retirada será aqui</b>`)
+    }).addTo(currentMap)
+    L.marker([lat, lng]).addTo(currentMap).bindPopup(`<b>Sua Retirada será aqui</b>`)
     .openPopup();
-
 
     const closeButton = document.getElementById('close-map-popup');
     closeButton.addEventListener('click', () => {
         popup.style.display = 'none';
-        map.remove();
+        currentMap.remove(); 
+        currentMap = null;
     });
 }
