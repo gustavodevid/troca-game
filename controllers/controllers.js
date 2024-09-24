@@ -7,6 +7,7 @@ import fs from 'fs';
 import { Op, fn, col, Sequelize } from 'sequelize';
 import { getDistance } from 'geolib';
 import Usuario from "../models/usuarioModel.js";
+import mongoose from "mongoose";
 
 export async function criarUsuario(req, res) {
   const { username, senha } = req.body;
@@ -64,8 +65,9 @@ export async function renderizarPaginaHome(req, res) {
   const userLongitude = parseFloat(req.session.longitude); 
   const proximityRadius = 50000;
   try {
-   
+    
     const games = await Game.findAll();
+    const stores = await Store.find();
 
     const nearbyGames = games.filter(game => {
         const distance = calculateDistance(
@@ -86,8 +88,7 @@ export async function renderizarPaginaHome(req, res) {
         );
         return distance > proximityRadius;
     });
-
-    res.render('paginaHome', { nearbyGames, farAwayGames, username: req.session.username });
+    res.render('paginaHome', { nearbyGames, farAwayGames, stores, username: req.session.username });
 } catch (error) {
     console.error('Erro ao buscar jogos:', error);
     res.status(500).send('Erro interno do servidor');
@@ -108,10 +109,10 @@ export function renderizarPaginaItem(req, res) {
   res.render('paginaItem', {title: 'Compra'});
 }
 
-// export async function getAllStores(req, res) {
-//   const locations = await Store.findAll();
-//   res.json(locations);
-// }
+export async function getAllStores(req, res) {
+  const stores = await Store.find();
+  res.json(stores);
+}
 
 export async function renderizarPaginaAgendar(req, res) {
   res.render('paginaAgendarRetirada');
@@ -121,7 +122,7 @@ export async function agendarRetirada(req, res) {
   try {
     const { store, nomeCliente, email, cpfCliente, item } = req.body;
     
-    const loja = await Store.findOne({ where: { name: store } });
+    const loja = await Store.findOne( { name: store } );
       
     const localizacaoLoja = loja.location;
 
@@ -143,20 +144,35 @@ export async function agendarRetirada(req, res) {
 }
 
 export async function renderizarPaginaMeusAnuncios(req, res) {
-  const usuarioUsername = req.query.username;
+  const usuarioUsername = req.session.username;
   const games = await Game.findAll({ where: { usuarioUsername } });
   res.render('paginaMeusAnuncios', { games })
 }
 
-// export async function fetchRetiradas(req, res) {
-//   const pedidos = await Retirada.findAll();
-//   res.json(pedidos);
-// }
+export async function renderizarPaginaRetiradas(req, res) {
+  const retiradas = await Retirada.find();
+  res.render('paginaMinhasRetiradas', { retiradas });
+}
+
+export async function fetchRetiradas(req, res) {
+  const pedidos = await Retirada.find();
+  res.json(pedidos);
+}
 
 export async function excluirRetirada(req, res) {
   const { id } = req.params;
-  const retirada = Retirada.destroy({ where: { id: id } });
-  res.json(retirada);
+  try {
+    const resultado = await Retirada.deleteOne({ _id: id });
+
+    if (resultado.deletedCount === 0) {
+      return res.status(404).json({ message: 'Retirada não encontrada' });
+    }
+
+    res.json({ message: 'Retirada excluída com sucesso' });
+  } catch (error) {
+    console.error('Erro ao excluir retirada:', error);
+    res.status(500).json({ message: 'Erro ao excluir retirada' });
+  }
 }
 
 export async function marcarComoConcluida(req, res) {
@@ -220,7 +236,7 @@ export async function anunciarJogo(req, res) {
           const username= req.session.username; 
           const latitude = req.session.latitude;
           const longitude = req.session.longitude;
-          
+
           const novoJogo = await Game.create({
               title,
               description,

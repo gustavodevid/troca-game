@@ -10,7 +10,7 @@ async function fetchretiradas() {
             const row = document.createElement('tr');
             
             const idCell = document.createElement('td');
-            const id = retirada.id;
+            const id = retirada._id;
             idCell.textContent = id;
             row.appendChild(idCell)
 

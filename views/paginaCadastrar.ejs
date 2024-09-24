@@ -4,24 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/style.css">
     <title>Login</title>
 </head>
+<style>
+    body {
+        background-image: url(''); 
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        margin: auto;
+        padding: 2rem;
+        /* background: #05003d; */
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+</style>
 <body>
-    <header>
-        <h1>Cadastre-se</h1>
-    </header>
     <main>
-        <form action="/cadastrar" method="POST" id="cadastrarForm">
-            <label for="username">Username:</label>
-            <input type="text" name="username" required>
-
-            <label for="password">Password:</label>
-            <input type="password" name="senha" required>
-
-            <button type="submit">Cadastrar</button>
-        </form>
-        
+        <div class="login-container">
+            <h1 class="text-center">Cadastre-se</h1>
+            <form action="/cadastrar" method="POST" id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" name="senha" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+            </form>
+        </div>
     </main>
 </body>
 </html>

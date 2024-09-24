@@ -22,7 +22,7 @@
                 </div>
                     <div class="logo">
                         <p></p>
-                        <a href="./"><img src="" alt="">Troca Game</a>
+                        <a href="/home"><img src="" alt="">Troca Game</a>
                         <p>Rolo on-line de jogos.</p>
                     </div>
                     <div class="buscar">  
@@ -42,8 +42,9 @@
             <div id="conteiner">
                
                     <ul>
-                        <li><a href="/anunciar?username=<%= username %>">Anuncie aqui</a></li>
-                        <li><a href="/meus-anuncios?username=<%= username %>">Meus Anuncios</a></li>
+                        <li><a href="/anunciar">Anuncie aqui</a></li>
+                        <li><a href="/meus-anuncios">Meus Anuncios</a></li>
+                        <li><a href="/pagina-retiradas">Minhas Retiradas</a></li>
                         
                     </ul>
                 </ul>
@@ -100,7 +101,46 @@
                 <br>
                 <br>
 
-
+                <h1>DISPONIVEIS PARA RETIRADA <span class="material-symbols-outlined">
+                    stadia_controller
+                    </span></h1>
+                    <div class="photo-grid">
+                        <div>
+                                <img src="assets/images/red-dead-redemption-xbox-cover.jpg" alt="Imagem 1">
+                                <p>Red Dead Redemtion 2 - Xbox </p>
+                                <h3>R$ 49,90</h3>
+                            <legend><span class="material-symbols-outlined">
+                                credit_card
+                                </span>3x sem juros</legend>
+                                <legend>5% no pix!</legend>
+                                
+                                <a href="/item">
+                                <button>COMPRAR</button> 
+                                </a>
+                            <span class="material-symbols-outlined">
+                                sell
+                            </span><span>57%</span>
+                        </div>
+                    </div>
+<div id="banner">
+                
+                        <img src="assets/images/banner.png" alt="">
+                </div>
+                <h1>Nossas lojas</h1>
+                
+                    <div id="map" style="height: 400px; width: 100%;"></div>
+                    <div class="reference-grid">
+                            <% stores.forEach(store => { %>
+                                <div>
+                                    <h3>
+                                        <%= store.name %>
+                                    </h3> 
+                                    <p>
+                                        <%= store.description %> </li>
+                                    </p>
+                                </div>
+                                    <% }) %>
+                    </div>
                     <h1>REFERÊNCIAS</h1>
                         <div class="reference-grid">
                             <div>                            
