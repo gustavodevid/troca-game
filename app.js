@@ -2,11 +2,11 @@ import express, { static as static_folder } from 'express';
 import bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import mapRoutes from './routes/mapRoutes.js';
+import routes from './src/routes/routes.js';
 import session from 'express-session';
 import RedisStore from 'connect-redis';
 import redis from 'redis';
-import connectMongo from './db/mongo.js';
+import connectMongo from './src/db/mongo.js';
 
 const app = express();
 
@@ -44,13 +44,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configuração de visualizações
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', 'src/views');
 
 // Configuração de arquivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(static_folder('public'));
+
+app.use(express.static(path.join(__dirname, 'src/public')));
 
 // Configuração de rotas
-app.use('/', mapRoutes);
+app.use(routes);
 
 export default app;

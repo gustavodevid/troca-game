@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/public/styles/style.css">
+    <link rel="stylesheet" href="/src/public/styles/footer.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>Games</title>
+</head>
+
+<header>
+    <header id="header">
+    <div class="header">
+            <div class="content">
+                <div class="principal" style="text-align: end;">
+                    <p>Seja bem vindo, <%= username %>!</p>
+                <form action="/login/logout" method="POST" style="display:inline;">
+                    <button type="submit">Logout</button>
+                </form>
+                </div>
+                    <div class="logo">
+                        <p></p>
+                        <a href="/pagina/home"><img src="" alt="">Troca Game</a>
+                        <p>Rolo on-line de jogos.</p>
+                    </div>
+                    <div class="buscar">  
+                        <form action="/game/search" method="GET">
+                            <input type="text" name="query" placeholder="O que você procura?" required>
+                            <button type="submit"><span class="material-symbols-outlined">
+                                search
+                                </span></button>
+                            </form> 
+                    </div>
+                </div>
+        </div>
+                
+            </header>
+        
+        <nav class="sobre">
+            <div id="conteiner">
+               
+                    <ul>
+                        <li><a href="/anunciar">Anuncie aqui</a></li>
+                        <li><a href="/meus-anuncios">Meus Anuncios</a></li>
+                        <li><a href="/pagina-retiradas">Minhas Retiradas</a></li>
+                        
+                    </ul>
+                </ul>
+        
+            </div>
+        </nav>
+
+<body>
+
+    <div class="main">
+    
+    <main>
+
+        <div class="curso">
+
+            <h1>ESTÃO BOTANDO PRA JOGO NA SUA REGIÃO <span class="material-symbols-outlined">
+                stadia_controller
+                </span></h1>
+                
+                <div class="sobre-curso">
+                    
+                    <div class="photo-grid">
+                        <% nearbyGames.forEach(game => { %>
+                            <div>
+                                <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
+                                <p><%= game.title %></p>
+                                <h3>R$ <%= game.price.toFixed(2) %></h3>
+                                <p>Anunciado por: <%= game.usuarioUsername %></p>
+                            </div>
+                        <% }) %>
+                    </div>
+            <br>
+            
+            
+            <br>
+        </div>
+
+            <h1>UM POUCO MAIS DISTANTE<span class="material-symbols-outlined">
+                stadia_controller
+                </span></h1>
+            
+                <div class="photo-grid">
+                    <% farAwayGames.forEach(game => { %>
+                        <div>
+                            <img src="<%= game.imageUrl %>" alt="<%= game.title %>">
+                            <p><%= game.title %></p>
+                            <h3>R$ <%= game.price.toFixed(2) %></h3>
+                            <p>Anunciado por: <%= game.usuarioUsername %></p>
+                        </div>
+                    <% }) %>
+                </div>  
+                <br>
+                <br>
+                <br>
+                <br>
+
+                <h1>DISPONIVEIS PARA RETIRADA <span class="material-symbols-outlined">
+                    stadia_controller
+                    </span></h1>
+                    <div class="photo-grid">
+                        <div>
+                                <img src="assets/images/red-dead-redemption-xbox-cover.jpg" alt="Imagem 1">
+                                <p>Red Dead Redemtion 2 - Xbox </p>
+                                <h3>R$ 49,90</h3>
+                            <legend><span class="material-symbols-outlined">
+                                credit_card
+                                </span>3x sem juros</legend>
+                                <legend>5% no pix!</legend>
+                                
+                                <a href="/item">
+                                <button>COMPRAR</button> 
+                                </a>
+                            <span class="material-symbols-outlined">
+                                sell
+                            </span><span>57%</span>
+                        </div>
+                    </div>
+<div id="banner">
+                
+                        <img src="assets/images/banner.png" alt="">
+                </div>
+                <h1>Nossas lojas</h1>
+                
+                    <div id="map" style="height: 400px; width: 100%;"></div>
+                    <div class="reference-grid">
+                            <% stores.forEach(store => { %>
+                                <div>
+                                    <h3>
+                                        <%= store.name %>
+                                    </h3> 
+                                    <p>
+                                        <%= store.description %> </li>
+                                    </p>
+                                </div>
+                                    <% }) %>
+                    </div>
+                    <h1>REFERÊNCIAS</h1>
+                        <div class="reference-grid">
+                            <div>                            
+                                    <h3>Maggie</h3> <small><span>Nota: ⭐️⭐️⭐️⭐️⭐️</span></small>
+                                    <p>Bom não, mel!</p>
+                                    <legend>Comprou: Red Dead Redemption 2 - PS5</legend>
+                            </div>
+        
+                            <div>
+                                <h3>Gleen</h3><small><span>Nota: ⭐️⭐️⭐️⭐️</span></small>
+                                <p>Entrega super rápida</p>
+                                <legend>Comprou: RESIDENT EVIL 4: REMAKE - XBOX</legend>
+                        </div>
+                            <div>
+                                
+                                <h3>David Gustavo</h3> <small><span>Nota: ⭐️⭐️⭐️⭐️⭐️</span></small>
+                                <p>Muito boa a loja.</p>
+                                <legend>Comprou: Martha is Dead - PS5</legend>
+                            </div>
+                        
+                        </div>
+                </main>
+</div>   
+</body>
+<footer>    
+    <div class="footer">
+
+        <form>
+            <h2>Receba ofertas por e-mail:</h2>
+    
+            <input type="text" placeholder="Digite seu e-mail aqui">
+            <button type="submit">CADASTRAR</button>
+        </form>
+    
+    <div class="footer-top-wrapper">
+        <!-- <section class="footer-top">
+          
+        </section> -->
+        <section>
+            <menu>
+                <h2>Empresa</h2>
+                <li>
+                    <a>Política de Privacidade</a>
+                </li>
+                <li>
+                    <a>Depoimentos</a>
+                </li>
+                <li>
+                    <a>Fale Conosco</a>
+                </li>
+                <li>
+                    <a>Termos de Compra</a>
+                </li>
+            </menu>
+        </section>
+        <section>
+            <menu>
+                <h2>Cliente</h2>
+                <li>
+                    <a>Prazos de Entrega</a>
+                </li>
+                <li>
+                    <a>Formas de Pagamento</a>
+                </li>
+                <li>
+                    <a>Reembolso e Cancelamento</a>
+                </li>
+                <li>
+                    <a>Meus Pedidos</a>
+                </li>
+            </menu>
+        </section>
+        <section>
+            <menu>
+                <h2>Produtos e Serviços</h2>
+                <li>
+                    <a>PlayStation 4</a>
+                </li>
+                <li>
+                    <a>PlayStation 5</a>
+                </li>
+                <li>
+                    <a>Xbox</a>
+                </li>
+                <li>
+                    <a>Outro</a>
+                </li>
+            </menu>
+        </section>
+    </section>
+
+    </div>
+</div>
+</footer>
+<script src="js/map.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</html
